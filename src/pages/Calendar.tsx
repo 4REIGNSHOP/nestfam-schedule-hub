@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import AddEvent from '@/components/AddEvent';
@@ -7,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { format, isSameDay } from 'date-fns';
 import { Clock, User } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Event {
   id: string;
@@ -21,6 +21,7 @@ interface Event {
 const Calendar = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const { t } = useLanguage();
 
   // Load events from localStorage on component mount
   useEffect(() => {
@@ -95,8 +96,8 @@ const Calendar = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-blue-800 mb-2">Family Calendar</h1>
-            <p className="text-gray-600">Keep track of everyone's schedule in one place</p>
+            <h1 className="text-3xl font-bold text-blue-800 mb-2">{t('familyCalendar')}</h1>
+            <p className="text-gray-600">{t('calendarDescription')}</p>
           </div>
           <AddEvent onAddEvent={handleAddEvent} />
         </div>
@@ -127,13 +128,13 @@ const Calendar = () => {
             <Card className="shadow-lg border-0">
               <CardHeader>
                 <CardTitle className="text-blue-800">
-                  Events for {format(selectedDate, 'MMMM d, yyyy')}
+                  {t('eventsFor')} {format(selectedDate, 'MMMM d, yyyy')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 {selectedDateEvents.length === 0 ? (
                   <p className="text-gray-500 text-center py-8">
-                    No events scheduled for this day
+                    {t('noEventsScheduled')}
                   </p>
                 ) : (
                   <div className="space-y-4">
@@ -158,11 +159,11 @@ const Calendar = () => {
                           
                           <div className="flex flex-wrap gap-2">
                             <Badge className={getCategoryColor(event.category)}>
-                              {event.category}
+                              {t(event.category)}
                             </Badge>
                             <Badge className={getFamilyMemberColor(event.familyMember)}>
                               <User className="h-3 w-3 mr-1" />
-                              {event.familyMember}
+                              {t(event.familyMember)}
                             </Badge>
                           </div>
                         </div>

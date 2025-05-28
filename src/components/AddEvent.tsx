@@ -11,6 +11,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Event {
   id: string;
@@ -34,6 +35,7 @@ const AddEvent = ({ onAddEvent }: AddEventProps) => {
   const [time, setTime] = useState('');
   const [category, setCategory] = useState('');
   const [familyMember, setFamilyMember] = useState('');
+  const { t } = useLanguage();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,38 +69,38 @@ const AddEvent = ({ onAddEvent }: AddEventProps) => {
       <DialogTrigger asChild>
         <Button className="bg-orange-500 hover:bg-orange-600 text-white">
           <Plus className="h-4 w-4 mr-2" />
-          Add Event
+          {t('addEvent')}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-blue-800">Add New Family Event</DialogTitle>
+          <DialogTitle className="text-blue-800">{t('addNewFamilyEvent')}</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Label htmlFor="title">Event Title</Label>
+            <Label htmlFor="title">{t('eventTitle')}</Label>
             <Input
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Soccer practice, Family dinner..."
+              placeholder={t('eventTitlePlaceholder')}
               required
             />
           </div>
           
           <div>
-            <Label htmlFor="description">Description (Optional)</Label>
+            <Label htmlFor="description">{t('description')}</Label>
             <Textarea
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Additional details..."
+              placeholder={t('descriptionPlaceholder')}
               rows={3}
             />
           </div>
           
           <div>
-            <Label>Date</Label>
+            <Label>{t('date')}</Label>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -109,7 +111,7 @@ const AddEvent = ({ onAddEvent }: AddEventProps) => {
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {date ? format(date, "PPP") : <span>Pick a date</span>}
+                  {date ? format(date, "PPP") : <span>{t('pickDate')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
@@ -125,7 +127,7 @@ const AddEvent = ({ onAddEvent }: AddEventProps) => {
           </div>
           
           <div>
-            <Label htmlFor="time">Time</Label>
+            <Label htmlFor="time">{t('time')}</Label>
             <Input
               id="time"
               type="time"
@@ -136,41 +138,41 @@ const AddEvent = ({ onAddEvent }: AddEventProps) => {
           </div>
           
           <div>
-            <Label>Category</Label>
+            <Label>{t('category')}</Label>
             <Select value={category} onValueChange={setCategory} required>
               <SelectTrigger>
-                <SelectValue placeholder="Select category" />
+                <SelectValue placeholder={t('selectCategory')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="work">Work</SelectItem>
-                <SelectItem value="school">School</SelectItem>
-                <SelectItem value="family">Family Time</SelectItem>
-                <SelectItem value="sports">Sports/Activities</SelectItem>
-                <SelectItem value="medical">Medical</SelectItem>
-                <SelectItem value="social">Social</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
+                <SelectItem value="work">{t('work')}</SelectItem>
+                <SelectItem value="school">{t('school')}</SelectItem>
+                <SelectItem value="family">{t('family')}</SelectItem>
+                <SelectItem value="sports">{t('sports')}</SelectItem>
+                <SelectItem value="medical">{t('medical')}</SelectItem>
+                <SelectItem value="social">{t('social')}</SelectItem>
+                <SelectItem value="other">{t('other')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
           
           <div>
-            <Label>Family Member</Label>
+            <Label>{t('familyMember')}</Label>
             <Select value={familyMember} onValueChange={setFamilyMember} required>
               <SelectTrigger>
-                <SelectValue placeholder="Select family member" />
+                <SelectValue placeholder={t('selectFamilyMember')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="mom">Mom</SelectItem>
-                <SelectItem value="dad">Dad</SelectItem>
-                <SelectItem value="child1">Child 1</SelectItem>
-                <SelectItem value="child2">Child 2</SelectItem>
-                <SelectItem value="family">Whole Family</SelectItem>
+                <SelectItem value="mom">{t('mom')}</SelectItem>
+                <SelectItem value="dad">{t('dad')}</SelectItem>
+                <SelectItem value="child1">{t('child1')}</SelectItem>
+                <SelectItem value="child2">{t('child2')}</SelectItem>
+                <SelectItem value="family">{t('wholeFamily')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
           
           <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
-            Add Event
+            {t('addEvent')}
           </Button>
         </form>
       </DialogContent>
